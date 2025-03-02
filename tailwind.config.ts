@@ -15,4 +15,7 @@ export default {
     },
   },
   plugins: [],
+  corePlugins: {
+    preflight: false, // Disables Tailwind's default reset
+  },
 } satisfies Config;
