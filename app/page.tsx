@@ -1,15 +1,10 @@
-"use client";
-import { Spotlight } from "@/components/ui/spotlight-new";
 import Link from "next/link";
-import { useRef } from "react";
 
 export default function Home() {
-  const containerRef = useRef(null);
-
   return (
     
     <main className="">
-      {/* <Spotlight/> */}
+  
       <section className="flex flex-col gap-y-10 justify-center items-center min-h-screen">
         <h1 className="text-4xl xl:text-5xl 2xl:text-7xl font-bold">Track Like a Pro!
         </h1>
