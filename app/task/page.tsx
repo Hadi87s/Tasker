@@ -4,7 +4,7 @@ import React from 'react'
 
 
 const page = async () => {
-  const todoList = (await fetchData()).slice(0,10); // take 10 tasks
+  const todoList = (await fetchData()).slice(0,5); // take 10 tasks
   const images : IPic[] = (await fetchRandomPhotos());
   console.log(images);
   
