@@ -1,25 +1,42 @@
+"use client";
 import TaskDetails from '@/components/task-details/TaskDetails';
 import { fetchData } from '@/services/fetchData';
-import React from 'react'
+import { useParams, useSearchParams } from 'next/navigation';
+import React, { useEffect, useState } from 'react'
 
-interface IParams {
-    params: Promise<{id: number}>
-    searchParams: { [key: string]: string };
-}
 
-const page = async({params, searchParams}: IParams) => {
-  
-    const id = (await params).id 
-    const { imageUrl } = searchParams;
-    const todoList = (await fetchData()).slice(0,10); 
+const page = () => {
+    const {id} = useParams(); 
+    const params = useSearchParams();
+    const imageUrl = params.get("imageUrl") || "";
+    const [tasks,setTasks] = useState<Todo[]>();
+    const [loading, setLoading] = useState(true);
+    useEffect(()=> {
+      async function fetchTasks () {
+        try{
+          const res = await fetch("https://jsonplaceholder.typicode.com/todos");
+          if(!res.ok){
+            throw new Error("Failed to fetch tasks");
+          }
+          const data : Todo[] = await res.json();
+          setTasks(data);
+        } catch (error) {
+          console.error(error);
+        } finally{
+          setLoading(false);
+        }
+      }
+      if (id) fetchTasks();
+    },[id])
     
-    const task = todoList.find((task) => task.id === Number(id));
-    if (!task) {
-      return <div className='p-4 text-4xl font-bold absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]  '>404 | Task not found</div>;
+    // const task = todoList.find((task) => task.id === Number(id));
+    if (!tasks?.length) {
+      return <div className='p-4 text-4xl font-bold absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]'>404 | Task not found</div>;
     }
   return (
     <div>
-      {todoList.map((item)=> (item.id === Number(id) && <TaskDetails src={imageUrl} key={item.id}  task={item}/>))}
+      {}
+      {tasks.map((item)=> (item.id === Number(id) && <TaskDetails src={imageUrl} key={item.id}  task={item}/>))}
     </div>
   )
 }
