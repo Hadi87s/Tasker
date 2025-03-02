@@ -1,8 +1,15 @@
+enum Priority  {
+  HIGHT = "High",
+  MEDIUM = "Medium",
+  LOW = "Low",
+}
+
 interface Todo {
     userId: number,
     id: number,
     title: string,
     completed: boolean,
+    priority: Priority
 }
 
 interface ITask {

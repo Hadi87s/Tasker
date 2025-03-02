@@ -1,13 +1,14 @@
 "use client";
-import React from 'react'
-import Image from "next/image"
-import Link from 'next/link'
-import { useRouter } from "next/navigation"
-import { div } from 'framer-motion/client';
+import React from 'react';
+import Image from "next/image";
+import Link from 'next/link';
+import { useRouter } from "next/navigation";
+
 interface IDetails {
   task: Todo;
   src: string;
 }
+
 const TaskDetails = ({task, src} : IDetails) => {
   const router = useRouter();
 
