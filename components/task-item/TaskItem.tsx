@@ -1,8 +1,7 @@
-"use client";
 import React from 'react'
 import Link from 'next/link';
 import Image from "next/image"
-import { useRouter } from "next/navigation";
+import { notFound } from "next/navigation";
 import { CircleCheck, Clock } from 'lucide-react';
 
 interface ITask {
@@ -11,10 +10,8 @@ interface ITask {
 }
 
 const TaskItem = ({task,imageSrc}: ITask) => {
-  const router = useRouter();
-  const handleOnClick = (e:React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-    e.preventDefault();
-    router.push(`/task/${task.id}?imageUrl=${encodeURIComponent(imageSrc || "")}}`);
+  if(!task || task.id >= 200){
+    notFound();
   }
 
   return (
@@ -29,8 +26,7 @@ const TaskItem = ({task,imageSrc}: ITask) => {
         />
       <h2 className='font-bold text-xl lg:text-2xl'>{task.title}</h2>
       <span className={`p-2 text-sm w-fit ${task.completed? " bg-green-600/75": " bg-blue-600/75"} absolute top-4 right-4 font-bold rounded-2xl`}>{task.completed?( <span className='flex items-center gap-2'> <CircleCheck />Complete</span>) : ( <span className='flex items-center gap-2'> <Clock />Pending</span>)}</span>
-      
-      <Link onClick={handleOnClick} className='mx-auto bg-blue-800 p-3 transition duration-150 rounded-2xl hover:bg-blue-900 hover:ring-2 hover:ring-white' href={`/task/${task.id}`}>Check Tasks Details</Link>
+      <Link className='mx-auto bg-blue-800 p-3 transition duration-150 rounded-2xl hover:bg-blue-900 hover:ring-2 hover:ring-white' href={`/task/${task.id}?imageUrl=${imageSrc}}`}>Check Tasks Details</Link>
     </div>
   )
 }
