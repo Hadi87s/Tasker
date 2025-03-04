@@ -10,7 +10,7 @@ const page = () => {
     const imageUrl = params.get("imageUrl") || "";
     const [tasks,setTasks] = useState<Todo[]>();
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(false);
+    const [_, setError] = useState(false);
     useEffect(()=> {
       async function fetchTasks () {
         try{
